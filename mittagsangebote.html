@@ -1,3 +1,6 @@
+---
+layout: null
+---
 <!doctype html>
 <html lang="de">
 <head>
@@ -115,6 +118,25 @@
 
 <main>
 
+  <!-- ============================= AKTUELLES ============================= -->
+  <!-- Inhalt kommt aus content/aktuelles.txt und wird von GitHub Pages (Jekyll) beim Build eingesetzt. -->
+  <!-- Ist die Datei leer, wird die Box gar nicht erst ins HTML gerendert. -->
+  {% capture aktuelles_raw %}{% include_relative content/aktuelles.txt %}{% endcapture %}
+  {% assign aktuelles_message = aktuelles_raw | strip %}
+  {% if aktuelles_message != "" %}
+  <div class="aktuelles-bar">
+    <div class="container aktuelles-inner">
+      <span class="aktuelles-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 11v2a2 2 0 002 2h1l3 5V4L6 9H5a2 2 0 00-2 2z"/><path d="M14 8a4 4 0 010 8"/><path d="M18 5a8 8 0 010 14"/></svg>
+      </span>
+      <p class="aktuelles-text">
+        <strong>Aktuelles:</strong>
+        <span>{{ aktuelles_message | escape }}</span>
+      </p>
+    </div>
+  </div>
+  {% endif %}
+
   <section class="page-hero">
     <div class="container">
       <p class="kicker">Mittagstisch &amp; Mittagsmenü</p>
@@ -147,14 +169,14 @@
           <article class="dish">
             <div class="dish-top">
               <div class="dish-name"><span class="num">M1.</span>Hühnerfleisch "Chop Suey" mit versch. Gemüse &amp; Reis</div>
-              <div class="dish-price">13,00€</div>
+              <div class="dish-price">{{ site.data.preise_mittagsangebote["M1"] | default: "Preis auf Anfrage" }}</div>
             </div>
           </article>
 
           <article class="dish">
             <div class="dish-top">
               <div class="dish-name"><span class="num">M2.</span>Knusprige Ente "Chop Suey" mit versch. Gemüse &amp; Reis</div>
-              <div class="dish-price">14,50€</div>
+              <div class="dish-price">{{ site.data.preise_mittagsangebote["M2"] | default: "Preis auf Anfrage" }}</div>
             </div>
           </article>
 
@@ -167,7 +189,7 @@
                   <span class="spice-label">Scharf</span>
                 </span>
               </div>
-              <div class="dish-price">14,00€</div>
+              <div class="dish-price">{{ site.data.preise_mittagsangebote["M3"] | default: "Preis auf Anfrage" }}</div>
             </div>
             <p class="dish-desc">(Rote Curry-Kokosmilchsauce, gekocht mit Saisongemüse, Auberginen, Champignons, Paprika, Basilikum)</p>
           </article>
@@ -175,7 +197,7 @@
           <article class="dish">
             <div class="dish-top">
               <div class="dish-name"><span class="num">M4.</span>Süß-Sauer mit Hühnerfleisch</div>
-              <div class="dish-price">13,00€</div>
+              <div class="dish-price">{{ site.data.preise_mittagsangebote["M4"] | default: "Preis auf Anfrage" }}</div>
             </div>
             <p class="dish-desc">(Ananas, Paprika, Karroten mit versch. Gemüse &amp; Reis)</p>
           </article>
@@ -183,14 +205,14 @@
           <article class="dish">
             <div class="dish-top">
               <div class="dish-name"><span class="num">M5.</span>Gebratener Reis mit Garnelen und Eier, Gemüse</div>
-              <div class="dish-price">13,00€</div>
+              <div class="dish-price">{{ site.data.preise_mittagsangebote["M5"] | default: "Preis auf Anfrage" }}</div>
             </div>
           </article>
 
           <article class="dish">
             <div class="dish-top">
               <div class="dish-name"><span class="num">M6.</span>Gebratener Nudeln mit Hühnerfleisch und Eier, Gemüse</div>
-              <div class="dish-price">13,00€</div>
+              <div class="dish-price">{{ site.data.preise_mittagsangebote["M6"] | default: "Preis auf Anfrage" }}</div>
             </div>
           </article>
 
@@ -203,7 +225,7 @@
                   <span class="spice-label">Scharf</span>
                 </span>
               </div>
-              <div class="dish-price">14,00€</div>
+              <div class="dish-price">{{ site.data.preise_mittagsangebote["M7"] | default: "Preis auf Anfrage" }}</div>
             </div>
             <p class="dish-desc">(Paprika, Bambus, Zwiebeln und Basilikum mit Fischsoße)</p>
           </article>
@@ -211,7 +233,7 @@
           <article class="dish">
             <div class="dish-top">
               <div class="dish-name"><span class="num">M8.</span>Udon Nudeln mit Hühnerfleisch, Gemüse</div>
-              <div class="dish-price">14,00€</div>
+              <div class="dish-price">{{ site.data.preise_mittagsangebote["M8"] | default: "Preis auf Anfrage" }}</div>
             </div>
             <p class="dish-desc">(Pakchoi, Paprika, Karroten und Zuchini)</p>
           </article>

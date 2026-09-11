@@ -1,3 +1,6 @@
+---
+layout: null
+---
 <!doctype html>
 <html lang="de">
 <head>
@@ -115,6 +118,25 @@
 
 <main>
 
+  <!-- ============================= AKTUELLES ============================= -->
+  <!-- Inhalt kommt aus content/aktuelles.txt und wird von GitHub Pages (Jekyll) beim Build eingesetzt. -->
+  <!-- Ist die Datei leer, wird die Box gar nicht erst ins HTML gerendert. -->
+  {% capture aktuelles_raw %}{% include_relative content/aktuelles.txt %}{% endcapture %}
+  {% assign aktuelles_message = aktuelles_raw | strip %}
+  {% if aktuelles_message != "" %}
+  <div class="aktuelles-bar">
+    <div class="container aktuelles-inner">
+      <span class="aktuelles-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 11v2a2 2 0 002 2h1l3 5V4L6 9H5a2 2 0 00-2 2z"/><path d="M14 8a4 4 0 010 8"/><path d="M18 5a8 8 0 010 14"/></svg>
+      </span>
+      <p class="aktuelles-text">
+        <strong>Aktuelles:</strong>
+        <span>{{ aktuelles_message | escape }}</span>
+      </p>
+    </div>
+  </div>
+  {% endif %}
+
   <section class="page-hero">
     <div class="container">
       <p class="kicker">Speisekarte</p>
@@ -179,7 +201,7 @@
               <div class="dish-name"><span class="num">1.</span>Sauer-Scharf Suppe
                 <span class="dish-icons"><svg class="chili" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c2 3-1 4-1 7a4 4 0 004 4c2 0 3-1.5 3-3 2 2 2 6-1 8-3 2-8 2-11-1-3-3-2-9 2-12 1.5-1.1 3-2 4-3z"/></svg><svg class="chili" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c2 3-1 4-1 7a4 4 0 004 4c2 0 3-1.5 3-3 2 2 2 6-1 8-3 2-8 2-11-1-3-3-2-9 2-12 1.5-1.1 3-2 4-3z"/></svg></span>
               </div>
-              <div class="dish-price">3,50€</div>
+              <div class="dish-price">{{ site.data.preise_speisekarte["1"] | default: "Preis auf Anfrage" }}</div>
             </div>
             <p class="dish-desc">Chinesische Hühnersuppe mit Eiern, Karotten, Bambus &amp; Pilzen.</p>
           </article>
@@ -190,16 +212,16 @@
             </div>
             <p class="dish-desc">Mit Champignons, Mini-Tomaten &amp; Kräutern (Tom-Yam-Gung-Suppe).</p>
             <div class="protein-table">
-              <div class="row"><span>Hühnerfleisch</span><span>4,50€</span></div>
-              <div class="row"><span>Garnelen</span><span>5,00€</span></div>
-              <div class="row"><span>Vegan Tofu</span><span>4,50€</span></div>
+              <div class="row"><span>Hühnerfleisch</span><span>{{ site.data.preise_speisekarte["2-Huehnerfleisch"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>Garnelen</span><span>{{ site.data.preise_speisekarte["2-Garnelen"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>Vegan Tofu</span><span>{{ site.data.preise_speisekarte["2-Vegan-Tofu"] | default: "Preis auf Anfrage" }}</span></div>
             </div>
           </article>
 
           <article class="dish" data-tags="vorspeisen">
             <div class="dish-top">
               <div class="dish-name"><span class="num">3.</span>Wantan Suppe</div>
-              <div class="dish-price">5,00€</div>
+              <div class="dish-price">{{ site.data.preise_speisekarte["3"] | default: "Preis auf Anfrage" }}</div>
             </div>
             <p class="dish-desc">Pak Choi, Champignons.</p>
           </article>
@@ -210,9 +232,9 @@
             </div>
             <p class="dish-desc">Kokosmilchsuppe mit Kräutern &amp; Kokos.</p>
             <div class="protein-table">
-              <div class="row"><span>Hühnerfleisch</span><span>5,00€</span></div>
-              <div class="row"><span>Garnelen</span><span>5,50€</span></div>
-              <div class="row"><span>Vegan Tofu</span><span>5,00€</span></div>
+              <div class="row"><span>Hühnerfleisch</span><span>{{ site.data.preise_speisekarte["4-Huehnerfleisch"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>Garnelen</span><span>{{ site.data.preise_speisekarte["4-Garnelen"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>Vegan Tofu</span><span>{{ site.data.preise_speisekarte["4-Vegan-Tofu"] | default: "Preis auf Anfrage" }}</span></div>
             </div>
           </article>
 
@@ -221,7 +243,7 @@
               <div class="dish-name"><span class="num">5.</span>Saigon Salat
                 <span class="dish-icons"><svg class="leaf" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M4 20c8 0 16-6 16-16C10 4 4 12 4 20z"/></svg></span>
               </div>
-              <div class="dish-price">5,00€</div>
+              <div class="dish-price">{{ site.data.preise_speisekarte["5"] | default: "Preis auf Anfrage" }}</div>
             </div>
             <p class="dish-desc">Gurken, Eisbergsalat, Rucola, Minze, Möhren mit Dressing.</p>
           </article>
@@ -229,7 +251,7 @@
           <article class="dish" data-tags="vorspeisen huhn garnelen">
             <div class="dish-top">
               <div class="dish-name"><span class="num">6.</span>Ha Noi Rolls - Frühlingsrollen (2 Stk.)</div>
-              <div class="dish-price">5,50€</div>
+              <div class="dish-price">{{ site.data.preise_speisekarte["6"] | default: "Preis auf Anfrage" }}</div>
             </div>
             <p class="dish-desc">Gold-gebackene Reispapierrollen gefüllt mit Hühnerfleisch,
               gehackten Garnelen, Ei, Glasnudeln, Gemüse &amp; Morcheln. Limetten-Fisch-Sauce.</p>
@@ -238,7 +260,7 @@
           <article class="dish" data-tags="vorspeisen huhn garnelen">
             <div class="dish-top">
               <div class="dish-name"><span class="num">7.</span>Wantan Gebacken (5 Stk.)</div>
-              <div class="dish-price">5,00€</div>
+              <div class="dish-price">{{ site.data.preise_speisekarte["7"] | default: "Preis auf Anfrage" }}</div>
             </div>
             <p class="dish-desc">Gold-gebackene Teigtaschen gefüllt mit Hühnerfleisch und Garnelen, süßer Chili-Dip.</p>
           </article>
@@ -249,16 +271,16 @@
             </div>
             <p class="dish-desc">Reispapierrollen gefüllt mit Salat, Gemüse &amp; Kräutern.</p>
             <div class="protein-table">
-              <div class="row"><span>Hühnerfleisch</span><span>5,00€</span></div>
-              <div class="row"><span>Garnelen</span><span>6,00€</span></div>
-              <div class="row"><span>Tofu</span><span>5,00€</span></div>
+              <div class="row"><span>Hühnerfleisch</span><span>{{ site.data.preise_speisekarte["8-Huehnerfleisch"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>Garnelen</span><span>{{ site.data.preise_speisekarte["8-Garnelen"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>Tofu</span><span>{{ site.data.preise_speisekarte["8-Tofu"] | default: "Preis auf Anfrage" }}</span></div>
             </div>
           </article>
 
           <article class="dish" data-tags="vorspeisen vegetarisch">
             <div class="dish-top">
               <div class="dish-name"><span class="num">9.</span>Minirollen (6 Stk.) <span style="color:var(--muted); font-weight:400; font-size:.8rem;">(Vegetarisch)</span></div>
-              <div class="dish-price">3,50€</div>
+              <div class="dish-price">{{ site.data.preise_speisekarte["9"] | default: "Preis auf Anfrage" }}</div>
             </div>
             <p class="dish-desc">Gold-gebackene Mini Frühlingsrollen.</p>
           </article>
@@ -266,7 +288,7 @@
           <article class="dish" data-tags="vorspeisen vegan vegetarisch">
             <div class="dish-top">
               <div class="dish-name"><span class="num">10.</span>Edamame</div>
-              <div class="dish-price">5,00€</div>
+              <div class="dish-price">{{ site.data.preise_speisekarte["10"] | default: "Preis auf Anfrage" }}</div>
             </div>
             <p class="dish-desc">Gedämpfte japanische Sojabohnen.</p>
           </article>
@@ -274,7 +296,7 @@
           <article class="dish" data-tags="vorspeisen garnelen">
             <div class="dish-top">
               <div class="dish-name"><span class="num">11.</span>Garnelen paniert (4 Stk.)</div>
-              <div class="dish-price">6,00€</div>
+              <div class="dish-price">{{ site.data.preise_speisekarte["11"] | default: "Preis auf Anfrage" }}</div>
             </div>
             <p class="dish-desc">Serviert mit süß-saurer Soße.</p>
           </article>
@@ -290,7 +312,7 @@
           <article class="dish" data-tags="phobun vegan vegetarisch">
             <div class="dish-top">
               <div class="dish-name"><span class="num">14.</span>Pho Chay</div>
-              <div class="dish-price">12,50€</div>
+              <div class="dish-price">{{ site.data.preise_speisekarte["14"] | default: "Preis auf Anfrage" }}</div>
             </div>
             <p class="dish-desc">Herzhafte Reisbandnudelsuppe mit traditioneller 5-Kräuter-Brühe, sowie Pakchoi, Pilzen, Tofu, Frühlingszwiebeln &amp; Kräutern.</p>
           </article>
@@ -298,7 +320,7 @@
           <article class="dish" data-tags="phobun huhn">
             <div class="dish-top">
               <div class="dish-name"><span class="num">15.</span>Pho Ga</div>
-              <div class="dish-price">12,50€</div>
+              <div class="dish-price">{{ site.data.preise_speisekarte["15"] | default: "Preis auf Anfrage" }}</div>
             </div>
             <p class="dish-desc">Herzhafte Reisbandnudelsuppe mit traditioneller 5-Kräuter-Brühe, sowie Hühnerbrust, verfeinert mit Frühlingszwiebeln &amp; Kräutern.</p>
           </article>
@@ -306,7 +328,7 @@
           <article class="dish" data-tags="phobun rind">
             <div class="dish-top">
               <div class="dish-name"><span class="num">16.</span>Pho Bo</div>
-              <div class="dish-price">13,50€</div>
+              <div class="dish-price">{{ site.data.preise_speisekarte["16"] | default: "Preis auf Anfrage" }}</div>
             </div>
             <p class="dish-desc">Herzhafte Reisbandnudelsuppe mit traditioneller 5-Kräuter-Brühe, sowie Rindfleisch &amp; Kräutern.</p>
           </article>
@@ -314,7 +336,7 @@
           <article class="dish" data-tags="phobun rind">
             <div class="dish-top">
               <div class="dish-name"><span class="num">17.</span>Pho Dac Biet</div>
-              <div class="dish-price">15,00€</div>
+              <div class="dish-price">{{ site.data.preise_speisekarte["17"] | default: "Preis auf Anfrage" }}</div>
             </div>
             <p class="dish-desc">Herzhafte Reisbandnudelsuppe mit traditioneller 5-Kräuter-Brühe, sowie mit Rindfleisch, durchgekocht, zart, würfelförmig geschnitten, verfeinert mit Frühlingszwiebeln &amp; Kräutern.</p>
           </article>
@@ -322,7 +344,7 @@
           <article class="dish" data-tags="phobun rind">
             <div class="dish-top">
               <div class="dish-name"><span class="num">18.</span>Bun Bo Nam Bo <span style="color:var(--muted); font-weight:400; font-size:.8rem;">(lauwarm)</span></div>
-              <div class="dish-price">13,50€</div>
+              <div class="dish-price">{{ site.data.preise_speisekarte["18"] | default: "Preis auf Anfrage" }}</div>
             </div>
             <p class="dish-desc">Mariniertes Rindfleisch, wok-geschwenkt mit Zitronengras, serviert mit Reisnudeln,
               Salatmix, Kräutern, Erdnüssen &amp; Limetten-Fisch-Sauce.</p>
@@ -331,7 +353,7 @@
           <article class="dish" data-tags="phobun">
             <div class="dish-top">
               <div class="dish-name"><span class="num">19.</span>Bun Nem Ha Noi <span style="color:var(--muted); font-weight:400; font-size:.8rem;">(3 Stk., lauwarm)</span></div>
-              <div class="dish-price">13,50€</div>
+              <div class="dish-price">{{ site.data.preise_speisekarte["19"] | default: "Preis auf Anfrage" }}</div>
             </div>
             <p class="dish-desc">Reisnudeln, Kräutersalat, gehackte Erdnüsse, Röstzwiebeln &amp; hausgemachte Fisch-Sauce.</p>
           </article>
@@ -343,15 +365,15 @@
             <p class="dish-desc">Reisnudelsuppe mit gemischtem Salat, Kräutern, Röstzwiebeln, gerösteten Erdnüssen,
               übergossen mit Saigon-Spezial-Vinaigrette. Wahlweise dazu:</p>
             <div class="protein-table">
-              <div class="row"><span>A. Hühnerfleisch</span><span>12,00€</span></div>
-              <div class="row"><span>B. Knuspr. Hühnerbrustfilet</span><span>13,00€</span></div>
-              <div class="row"><span>C. Rindfleisch</span><span>14,00€</span></div>
-              <div class="row"><span>D. Ente kross</span><span>14,00€</span></div>
-              <div class="row"><span>E. Garnelen</span><span>14,00€</span></div>
-              <div class="row"><span>G. Gemüse</span><span>10,00€</span></div>
-              <div class="row"><span>I. Vegan Sesam-Ente</span><span>13,00€</span></div>
-              <div class="row"><span>V. Tofu</span><span>12,00€</span></div>
-              <div class="row"><span>K. Paniert. Garnelen</span><span>14,00€</span></div>
+              <div class="row"><span>A. Hühnerfleisch</span><span>{{ site.data.preise_speisekarte["20-A"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>B. Knuspr. Hühnerbrustfilet</span><span>{{ site.data.preise_speisekarte["20-B"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>C. Rindfleisch</span><span>{{ site.data.preise_speisekarte["20-C"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>D. Ente kross</span><span>{{ site.data.preise_speisekarte["20-D"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>E. Garnelen</span><span>{{ site.data.preise_speisekarte["20-E"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>G. Gemüse</span><span>{{ site.data.preise_speisekarte["20-G"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>I. Vegan Sesam-Ente</span><span>{{ site.data.preise_speisekarte["20-I"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>V. Tofu</span><span>{{ site.data.preise_speisekarte["20-V"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>K. Paniert. Garnelen</span><span>{{ site.data.preise_speisekarte["20-K"] | default: "Preis auf Anfrage" }}</span></div>
             </div>
           </article>
 
@@ -368,15 +390,15 @@
             <div class="dish-top"><div class="dish-name"><span class="num">21.</span>Pho Xao</div></div>
             <p class="dish-desc">Gebratene Reisbandnudeln mit asiatischem Gemüse, Pak Choi, Koriander, Ei, Schnittlauch &amp; Röstzwiebeln.</p>
             <div class="protein-table">
-              <div class="row"><span>A. Hühnerfleisch</span><span>12,00€</span></div>
-              <div class="row"><span>B. Knuspr. Hühnerbrustfilet</span><span>13,00€</span></div>
-              <div class="row"><span>C. Rindfleisch</span><span>14,00€</span></div>
-              <div class="row"><span>D. Ente kross</span><span>14,00€</span></div>
-              <div class="row"><span>E. Garnelen</span><span>14,00€</span></div>
-              <div class="row"><span>G. Gemüse</span><span>10,00€</span></div>
-              <div class="row"><span>I. Vegan Sesam-Ente</span><span>13,00€</span></div>
-              <div class="row"><span>V. Tofu</span><span>12,00€</span></div>
-              <div class="row"><span>K. Paniert. Garnelen</span><span>14,00€</span></div>
+              <div class="row"><span>A. Hühnerfleisch</span><span>{{ site.data.preise_speisekarte["21-A"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>B. Knuspr. Hühnerbrustfilet</span><span>{{ site.data.preise_speisekarte["21-B"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>C. Rindfleisch</span><span>{{ site.data.preise_speisekarte["21-C"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>D. Ente kross</span><span>{{ site.data.preise_speisekarte["21-D"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>E. Garnelen</span><span>{{ site.data.preise_speisekarte["21-E"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>G. Gemüse</span><span>{{ site.data.preise_speisekarte["21-G"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>I. Vegan Sesam-Ente</span><span>{{ site.data.preise_speisekarte["21-I"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>V. Tofu</span><span>{{ site.data.preise_speisekarte["21-V"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>K. Paniert. Garnelen</span><span>{{ site.data.preise_speisekarte["21-K"] | default: "Preis auf Anfrage" }}</span></div>
             </div>
           </article>
 
@@ -384,15 +406,15 @@
             <div class="dish-top"><div class="dish-name"><span class="num">23.</span>Mien Xao</div></div>
             <p class="dish-desc">Gebratene Glasnudeln mit verschiedenem Gemüse, Sojasprossen &amp; Sesam.</p>
             <div class="protein-table">
-              <div class="row"><span>A. Hühnerfleisch</span><span>12,00€</span></div>
-              <div class="row"><span>B. Knuspr. Hühnerbrustfilet</span><span>13,00€</span></div>
-              <div class="row"><span>C. Rindfleisch</span><span>14,00€</span></div>
-              <div class="row"><span>D. Ente kross</span><span>14,00€</span></div>
-              <div class="row"><span>E. Garnelen</span><span>14,00€</span></div>
-              <div class="row"><span>G. Gemüse</span><span>10,00€</span></div>
-              <div class="row"><span>I. Vegan Sesam-Ente</span><span>13,00€</span></div>
-              <div class="row"><span>V. Tofu</span><span>12,00€</span></div>
-              <div class="row"><span>K. Paniert. Garnelen</span><span>14,00€</span></div>
+              <div class="row"><span>A. Hühnerfleisch</span><span>{{ site.data.preise_speisekarte["23-A"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>B. Knuspr. Hühnerbrustfilet</span><span>{{ site.data.preise_speisekarte["23-B"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>C. Rindfleisch</span><span>{{ site.data.preise_speisekarte["23-C"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>D. Ente kross</span><span>{{ site.data.preise_speisekarte["23-D"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>E. Garnelen</span><span>{{ site.data.preise_speisekarte["23-E"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>G. Gemüse</span><span>{{ site.data.preise_speisekarte["23-G"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>I. Vegan Sesam-Ente</span><span>{{ site.data.preise_speisekarte["23-I"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>V. Tofu</span><span>{{ site.data.preise_speisekarte["23-V"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>K. Paniert. Garnelen</span><span>{{ site.data.preise_speisekarte["23-K"] | default: "Preis auf Anfrage" }}</span></div>
             </div>
           </article>
 
@@ -400,15 +422,15 @@
             <div class="dish-top"><div class="dish-name"><span class="num">24.</span>Udon Xao</div></div>
             <p class="dish-desc">Udon-Nudeln mit Gemüse, Pakchoi, Paprika &amp; Knoblauch in dunkler Soße, Sesam.</p>
             <div class="protein-table">
-              <div class="row"><span>A. Hühnerfleisch</span><span>12,00€</span></div>
-              <div class="row"><span>B. Knuspr. Hühnerbrustfilet</span><span>13,00€</span></div>
-              <div class="row"><span>C. Rindfleisch</span><span>14,00€</span></div>
-              <div class="row"><span>D. Ente kross</span><span>14,00€</span></div>
-              <div class="row"><span>E. Garnelen</span><span>14,00€</span></div>
-              <div class="row"><span>G. Gemüse</span><span>10,00€</span></div>
-              <div class="row"><span>I. Vegan Sesam-Ente</span><span>13,00€</span></div>
-              <div class="row"><span>V. Tofu</span><span>12,00€</span></div>
-              <div class="row"><span>K. Paniert. Garnelen</span><span>14,00€</span></div>
+              <div class="row"><span>A. Hühnerfleisch</span><span>{{ site.data.preise_speisekarte["24-A"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>B. Knuspr. Hühnerbrustfilet</span><span>{{ site.data.preise_speisekarte["24-B"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>C. Rindfleisch</span><span>{{ site.data.preise_speisekarte["24-C"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>D. Ente kross</span><span>{{ site.data.preise_speisekarte["24-D"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>E. Garnelen</span><span>{{ site.data.preise_speisekarte["24-E"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>G. Gemüse</span><span>{{ site.data.preise_speisekarte["24-G"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>I. Vegan Sesam-Ente</span><span>{{ site.data.preise_speisekarte["24-I"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>V. Tofu</span><span>{{ site.data.preise_speisekarte["24-V"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>K. Paniert. Garnelen</span><span>{{ site.data.preise_speisekarte["24-K"] | default: "Preis auf Anfrage" }}</span></div>
             </div>
           </article>
 
@@ -429,15 +451,15 @@
             </div>
             <p class="dish-desc">Rote Curry-Kokosmilchsauce mit Saisongemüse, Auberginen, Champignons, Paprika &amp; Basilikum.</p>
             <div class="protein-table">
-              <div class="row"><span>A. Hühnerfleisch</span><span>12,00€</span></div>
-              <div class="row"><span>B. Knuspr. Hühnerbrustfilet</span><span>13,00€</span></div>
-              <div class="row"><span>C. Rindfleisch</span><span>14,00€</span></div>
-              <div class="row"><span>D. Ente kross</span><span>14,00€</span></div>
-              <div class="row"><span>E. Garnelen</span><span>14,00€</span></div>
-              <div class="row"><span>G. Gemüse</span><span>10,00€</span></div>
-              <div class="row"><span>I. Vegan Sesam-Ente</span><span>13,00€</span></div>
-              <div class="row"><span>V. Tofu</span><span>12,00€</span></div>
-              <div class="row"><span>K. Paniert. Garnelen</span><span>14,00€</span></div>
+              <div class="row"><span>A. Hühnerfleisch</span><span>{{ site.data.preise_speisekarte["30-A"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>B. Knuspr. Hühnerbrustfilet</span><span>{{ site.data.preise_speisekarte["30-B"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>C. Rindfleisch</span><span>{{ site.data.preise_speisekarte["30-C"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>D. Ente kross</span><span>{{ site.data.preise_speisekarte["30-D"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>E. Garnelen</span><span>{{ site.data.preise_speisekarte["30-E"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>G. Gemüse</span><span>{{ site.data.preise_speisekarte["30-G"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>I. Vegan Sesam-Ente</span><span>{{ site.data.preise_speisekarte["30-I"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>V. Tofu</span><span>{{ site.data.preise_speisekarte["30-V"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>K. Paniert. Garnelen</span><span>{{ site.data.preise_speisekarte["30-K"] | default: "Preis auf Anfrage" }}</span></div>
             </div>
           </article>
 
@@ -449,15 +471,15 @@
             </div>
             <p class="dish-desc">Grüne Curry-Kokosmilchsauce mit Saisongemüse, Auberginen, Paprika &amp; Basilikum.</p>
             <div class="protein-table">
-              <div class="row"><span>A. Hühnerfleisch</span><span>12,00€</span></div>
-              <div class="row"><span>B. Knuspr. Hühnerbrustfilet</span><span>13,00€</span></div>
-              <div class="row"><span>C. Rindfleisch</span><span>14,00€</span></div>
-              <div class="row"><span>D. Ente kross</span><span>14,00€</span></div>
-              <div class="row"><span>E. Garnelen</span><span>14,00€</span></div>
-              <div class="row"><span>G. Gemüse</span><span>10,00€</span></div>
-              <div class="row"><span>I. Vegan Sesam-Ente</span><span>13,00€</span></div>
-              <div class="row"><span>V. Tofu</span><span>12,00€</span></div>
-              <div class="row"><span>K. Paniert. Garnelen</span><span>14,00€</span></div>
+              <div class="row"><span>A. Hühnerfleisch</span><span>{{ site.data.preise_speisekarte["31-A"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>B. Knuspr. Hühnerbrustfilet</span><span>{{ site.data.preise_speisekarte["31-B"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>C. Rindfleisch</span><span>{{ site.data.preise_speisekarte["31-C"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>D. Ente kross</span><span>{{ site.data.preise_speisekarte["31-D"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>E. Garnelen</span><span>{{ site.data.preise_speisekarte["31-E"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>G. Gemüse</span><span>{{ site.data.preise_speisekarte["31-G"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>I. Vegan Sesam-Ente</span><span>{{ site.data.preise_speisekarte["31-I"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>V. Tofu</span><span>{{ site.data.preise_speisekarte["31-V"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>K. Paniert. Garnelen</span><span>{{ site.data.preise_speisekarte["31-K"] | default: "Preis auf Anfrage" }}</span></div>
             </div>
           </article>
 
@@ -465,15 +487,15 @@
             <div class="dish-top"><div class="dish-name"><span class="num">32.</span>Erdnuss Curry</div></div>
             <p class="dish-desc">Erdnuss-Kokosmilchsauce mit Saisongemüse, Champignons &amp; Paprika.</p>
             <div class="protein-table">
-              <div class="row"><span>A. Hühnerfleisch</span><span>12,00€</span></div>
-              <div class="row"><span>B. Knuspr. Hühnerbrustfilet</span><span>13,00€</span></div>
-              <div class="row"><span>C. Rindfleisch</span><span>14,00€</span></div>
-              <div class="row"><span>D. Ente kross</span><span>14,00€</span></div>
-              <div class="row"><span>E. Garnelen</span><span>14,00€</span></div>
-              <div class="row"><span>G. Gemüse</span><span>10,00€</span></div>
-              <div class="row"><span>I. Vegan Sesam-Ente</span><span>13,00€</span></div>
-              <div class="row"><span>V. Tofu</span><span>12,00€</span></div>
-              <div class="row"><span>K. Paniert. Garnelen</span><span>14,00€</span></div>
+              <div class="row"><span>A. Hühnerfleisch</span><span>{{ site.data.preise_speisekarte["32-A"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>B. Knuspr. Hühnerbrustfilet</span><span>{{ site.data.preise_speisekarte["32-B"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>C. Rindfleisch</span><span>{{ site.data.preise_speisekarte["32-C"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>D. Ente kross</span><span>{{ site.data.preise_speisekarte["32-D"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>E. Garnelen</span><span>{{ site.data.preise_speisekarte["32-E"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>G. Gemüse</span><span>{{ site.data.preise_speisekarte["32-G"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>I. Vegan Sesam-Ente</span><span>{{ site.data.preise_speisekarte["32-I"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>V. Tofu</span><span>{{ site.data.preise_speisekarte["32-V"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>K. Paniert. Garnelen</span><span>{{ site.data.preise_speisekarte["32-K"] | default: "Preis auf Anfrage" }}</span></div>
             </div>
           </article>
 
@@ -485,15 +507,15 @@
             </div>
             <p class="dish-desc">Mango-Kokosmilchsauce mit Saisongemüse, Champignons &amp; Paprika.</p>
             <div class="protein-table">
-              <div class="row"><span>A. Hühnerfleisch</span><span>12,00€</span></div>
-              <div class="row"><span>B. Knuspr. Hühnerbrustfilet</span><span>13,00€</span></div>
-              <div class="row"><span>C. Rindfleisch</span><span>14,00€</span></div>
-              <div class="row"><span>D. Ente kross</span><span>14,00€</span></div>
-              <div class="row"><span>E. Garnelen</span><span>14,00€</span></div>
-              <div class="row"><span>G. Gemüse</span><span>10,00€</span></div>
-              <div class="row"><span>I. Vegan Sesam-Ente</span><span>13,00€</span></div>
-              <div class="row"><span>V. Tofu</span><span>12,00€</span></div>
-              <div class="row"><span>K. Paniert. Garnelen</span><span>14,00€</span></div>
+              <div class="row"><span>A. Hühnerfleisch</span><span>{{ site.data.preise_speisekarte["33-A"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>B. Knuspr. Hühnerbrustfilet</span><span>{{ site.data.preise_speisekarte["33-B"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>C. Rindfleisch</span><span>{{ site.data.preise_speisekarte["33-C"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>D. Ente kross</span><span>{{ site.data.preise_speisekarte["33-D"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>E. Garnelen</span><span>{{ site.data.preise_speisekarte["33-E"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>G. Gemüse</span><span>{{ site.data.preise_speisekarte["33-G"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>I. Vegan Sesam-Ente</span><span>{{ site.data.preise_speisekarte["33-I"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>V. Tofu</span><span>{{ site.data.preise_speisekarte["33-V"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>K. Paniert. Garnelen</span><span>{{ site.data.preise_speisekarte["33-K"] | default: "Preis auf Anfrage" }}</span></div>
             </div>
           </article>
 
@@ -514,15 +536,15 @@
             </div>
             <p class="dish-desc">Ananas, Paprika, Karotten und hausgemachte Süß-Sauer-Soße.</p>
             <div class="protein-table">
-              <div class="row"><span>A. Hühnerfleisch</span><span>12,00€</span></div>
-              <div class="row"><span>B. Knuspr. Hühnerbrustfilet</span><span>13,00€</span></div>
-              <div class="row"><span>C. Rindfleisch</span><span>14,00€</span></div>
-              <div class="row"><span>D. Ente kross</span><span>14,00€</span></div>
-              <div class="row"><span>E. Garnelen</span><span>14,00€</span></div>
-              <div class="row"><span>G. Gemüse</span><span>10,00€</span></div>
-              <div class="row"><span>I. Vegan Sesam-Ente</span><span>13,00€</span></div>
-              <div class="row"><span>V. Tofu</span><span>12,00€</span></div>
-              <div class="row"><span>K. Paniert. Garnelen</span><span>14,00€</span></div>
+              <div class="row"><span>A. Hühnerfleisch</span><span>{{ site.data.preise_speisekarte["34-A"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>B. Knuspr. Hühnerbrustfilet</span><span>{{ site.data.preise_speisekarte["34-B"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>C. Rindfleisch</span><span>{{ site.data.preise_speisekarte["34-C"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>D. Ente kross</span><span>{{ site.data.preise_speisekarte["34-D"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>E. Garnelen</span><span>{{ site.data.preise_speisekarte["34-E"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>G. Gemüse</span><span>{{ site.data.preise_speisekarte["34-G"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>I. Vegan Sesam-Ente</span><span>{{ site.data.preise_speisekarte["34-I"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>V. Tofu</span><span>{{ site.data.preise_speisekarte["34-V"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>K. Paniert. Garnelen</span><span>{{ site.data.preise_speisekarte["34-K"] | default: "Preis auf Anfrage" }}</span></div>
             </div>
           </article>
 
@@ -534,15 +556,15 @@
             </div>
             <p class="dish-desc">Soja-Knoblauchsauce gebraten mit Saisongemüse, Champignons, Paprika, Chili &amp; Zwiebeln.</p>
             <div class="protein-table">
-              <div class="row"><span>A. Hühnerfleisch</span><span>12,00€</span></div>
-              <div class="row"><span>B. Knuspr. Hühnerbrustfilet</span><span>13,00€</span></div>
-              <div class="row"><span>C. Rindfleisch</span><span>14,00€</span></div>
-              <div class="row"><span>D. Ente kross</span><span>14,00€</span></div>
-              <div class="row"><span>E. Garnelen</span><span>14,00€</span></div>
-              <div class="row"><span>G. Gemüse</span><span>10,00€</span></div>
-              <div class="row"><span>I. Vegan Sesam-Ente</span><span>13,00€</span></div>
-              <div class="row"><span>V. Tofu</span><span>12,00€</span></div>
-              <div class="row"><span>K. Paniert. Garnelen</span><span>14,00€</span></div>
+              <div class="row"><span>A. Hühnerfleisch</span><span>{{ site.data.preise_speisekarte["35-A"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>B. Knuspr. Hühnerbrustfilet</span><span>{{ site.data.preise_speisekarte["35-B"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>C. Rindfleisch</span><span>{{ site.data.preise_speisekarte["35-C"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>D. Ente kross</span><span>{{ site.data.preise_speisekarte["35-D"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>E. Garnelen</span><span>{{ site.data.preise_speisekarte["35-E"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>G. Gemüse</span><span>{{ site.data.preise_speisekarte["35-G"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>I. Vegan Sesam-Ente</span><span>{{ site.data.preise_speisekarte["35-I"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>V. Tofu</span><span>{{ site.data.preise_speisekarte["35-V"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>K. Paniert. Garnelen</span><span>{{ site.data.preise_speisekarte["35-K"] | default: "Preis auf Anfrage" }}</span></div>
             </div>
           </article>
 
@@ -550,15 +572,15 @@
             <div class="dish-top"><div class="dish-name"><span class="num">36.</span>Com Rang</div></div>
             <p class="dish-desc">Gebratener Reis mit Ei und Gemüse.</p>
             <div class="protein-table">
-              <div class="row"><span>A. Hühnerfleisch</span><span>11,50€</span></div>
-              <div class="row"><span>B. Knuspr. Hühnerbrustfilet</span><span>12,50€</span></div>
-              <div class="row"><span>C. Rindfleisch</span><span>13,00€</span></div>
-              <div class="row"><span>D. Ente kross</span><span>13,50€</span></div>
-              <div class="row"><span>E. Garnelen</span><span>13,50€</span></div>
-              <div class="row"><span>G. Gemüse</span><span>9,00€</span></div>
-              <div class="row"><span>I. Vegan Sesam-Ente</span><span>12,50€</span></div>
-              <div class="row"><span>V. Tofu</span><span>11,00€</span></div>
-              <div class="row"><span>K. Paniert. Garnelen</span><span>13,00€</span></div>
+              <div class="row"><span>A. Hühnerfleisch</span><span>{{ site.data.preise_speisekarte["36-A"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>B. Knuspr. Hühnerbrustfilet</span><span>{{ site.data.preise_speisekarte["36-B"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>C. Rindfleisch</span><span>{{ site.data.preise_speisekarte["36-C"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>D. Ente kross</span><span>{{ site.data.preise_speisekarte["36-D"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>E. Garnelen</span><span>{{ site.data.preise_speisekarte["36-E"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>G. Gemüse</span><span>{{ site.data.preise_speisekarte["36-G"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>I. Vegan Sesam-Ente</span><span>{{ site.data.preise_speisekarte["36-I"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>V. Tofu</span><span>{{ site.data.preise_speisekarte["36-V"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>K. Paniert. Garnelen</span><span>{{ site.data.preise_speisekarte["36-K"] | default: "Preis auf Anfrage" }}</span></div>
             </div>
           </article>
 
@@ -566,15 +588,15 @@
             <div class="dish-top"><div class="dish-name"><span class="num">37.</span>My Xao</div></div>
             <p class="dish-desc">Gebratene Nudeln mit Ei und Gemüse.</p>
             <div class="protein-table">
-              <div class="row"><span>A. Hühnerfleisch</span><span>10,50€</span></div>
-              <div class="row"><span>B. Knuspr. Hühnerbrustfilet</span><span>11,50€</span></div>
-              <div class="row"><span>C. Rindfleisch</span><span>12,00€</span></div>
-              <div class="row"><span>D. Ente kross</span><span>12,50€</span></div>
-              <div class="row"><span>E. Garnelen</span><span>12,50€</span></div>
-              <div class="row"><span>G. Gemüse</span><span>8,00€</span></div>
-              <div class="row"><span>I. Vegan Sesam-Ente</span><span>11,50€</span></div>
-              <div class="row"><span>V. Tofu</span><span>10,00€</span></div>
-              <div class="row"><span>K. Paniert. Garnelen</span><span>12,00€</span></div>
+              <div class="row"><span>A. Hühnerfleisch</span><span>{{ site.data.preise_speisekarte["37-A"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>B. Knuspr. Hühnerbrustfilet</span><span>{{ site.data.preise_speisekarte["37-B"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>C. Rindfleisch</span><span>{{ site.data.preise_speisekarte["37-C"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>D. Ente kross</span><span>{{ site.data.preise_speisekarte["37-D"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>E. Garnelen</span><span>{{ site.data.preise_speisekarte["37-E"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>G. Gemüse</span><span>{{ site.data.preise_speisekarte["37-G"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>I. Vegan Sesam-Ente</span><span>{{ site.data.preise_speisekarte["37-I"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>V. Tofu</span><span>{{ site.data.preise_speisekarte["37-V"] | default: "Preis auf Anfrage" }}</span></div>
+              <div class="row"><span>K. Paniert. Garnelen</span><span>{{ site.data.preise_speisekarte["37-K"] | default: "Preis auf Anfrage" }}</span></div>
             </div>
           </article>
 
@@ -590,7 +612,7 @@
           <article class="dish" data-tags="vietnamesisch huhn rind ente garnelen">
             <div class="dish-top">
               <div class="dish-name"><span class="num">38.</span>Saigon Special</div>
-              <div class="dish-price">18,00€</div>
+              <div class="dish-price">{{ site.data.preise_speisekarte["38"] | default: "Preis auf Anfrage" }}</div>
             </div>
             <p class="dish-desc">Acht Kostbarkeiten in Knoblauchsauce gebraten: Hühnerfleisch, Rind, Garnelen, Ente kross.</p>
           </article>
@@ -600,7 +622,7 @@
               <div class="dish-name"><span class="num">39.</span>Gebratene scharfe Garnelen
                 <span class="dish-icons"><svg class="chili" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c2 3-1 4-1 7a4 4 0 004 4c2 0 3-1.5 3-3 2 2 2 6-1 8-3 2-8 2-11-1-3-3-2-9 2-12 1.5-1.1 3-2 4-3z"/></svg><svg class="chili" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c2 3-1 4-1 7a4 4 0 004 4c2 0 3-1.5 3-3 2 2 2 6-1 8-3 2-8 2-11-1-3-3-2-9 2-12 1.5-1.1 3-2 4-3z"/></svg><svg class="chili" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c2 3-1 4-1 7a4 4 0 004 4c2 0 3-1.5 3-3 2 2 2 6-1 8-3 2-8 2-11-1-3-3-2-9 2-12 1.5-1.1 3-2 4-3z"/></svg></span>
               </div>
-              <div class="dish-price">17,00€</div>
+              <div class="dish-price">{{ site.data.preise_speisekarte["39"] | default: "Preis auf Anfrage" }}</div>
             </div>
           </article>
 
@@ -609,7 +631,7 @@
               <div class="dish-name"><span class="num">40.</span>Gebratenes Rindfleisch mit Gemüse
                 <span class="dish-icons"><svg class="chili" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c2 3-1 4-1 7a4 4 0 004 4c2 0 3-1.5 3-3 2 2 2 6-1 8-3 2-8 2-11-1-3-3-2-9 2-12 1.5-1.1 3-2 4-3z"/></svg><svg class="chili" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c2 3-1 4-1 7a4 4 0 004 4c2 0 3-1.5 3-3 2 2 2 6-1 8-3 2-8 2-11-1-3-3-2-9 2-12 1.5-1.1 3-2 4-3z"/></svg><svg class="chili" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c2 3-1 4-1 7a4 4 0 004 4c2 0 3-1.5 3-3 2 2 2 6-1 8-3 2-8 2-11-1-3-3-2-9 2-12 1.5-1.1 3-2 4-3z"/></svg></span>
               </div>
-              <div class="dish-price">17,00€</div>
+              <div class="dish-price">{{ site.data.preise_speisekarte["40"] | default: "Preis auf Anfrage" }}</div>
             </div>
           </article>
 
@@ -618,7 +640,7 @@
               <div class="dish-name"><span class="num">41.</span>Ga Xao
                 <span class="dish-icons"><svg class="chili" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c2 3-1 4-1 7a4 4 0 004 4c2 0 3-1.5 3-3 2 2 2 6-1 8-3 2-8 2-11-1-3-3-2-9 2-12 1.5-1.1 3-2 4-3z"/></svg><svg class="chili" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c2 3-1 4-1 7a4 4 0 004 4c2 0 3-1.5 3-3 2 2 2 6-1 8-3 2-8 2-11-1-3-3-2-9 2-12 1.5-1.1 3-2 4-3z"/></svg><svg class="chili" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c2 3-1 4-1 7a4 4 0 004 4c2 0 3-1.5 3-3 2 2 2 6-1 8-3 2-8 2-11-1-3-3-2-9 2-12 1.5-1.1 3-2 4-3z"/></svg></span>
               </div>
-              <div class="dish-price">16,00€</div>
+              <div class="dish-price">{{ site.data.preise_speisekarte["41"] | default: "Preis auf Anfrage" }}</div>
             </div>
             <p class="dish-desc">Gebratenes Hähnchen Thai-Art mit Paprika, Bambus, Zwiebeln &amp; Basilikum.</p>
           </article>
@@ -628,7 +650,7 @@
               <div class="dish-name"><span class="num">42.</span>Chop Suey
                 <span class="dish-icons"><svg class="chili" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c2 3-1 4-1 7a4 4 0 004 4c2 0 3-1.5 3-3 2 2 2 6-1 8-3 2-8 2-11-1-3-3-2-9 2-12 1.5-1.1 3-2 4-3z"/></svg><svg class="chili" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c2 3-1 4-1 7a4 4 0 004 4c2 0 3-1.5 3-3 2 2 2 6-1 8-3 2-8 2-11-1-3-3-2-9 2-12 1.5-1.1 3-2 4-3z"/></svg></span>
               </div>
-              <div class="dish-price">16,00€</div>
+              <div class="dish-price">{{ site.data.preise_speisekarte["42"] | default: "Preis auf Anfrage" }}</div>
             </div>
             <p class="dish-desc">Gemüse mit paniertem Fisch.</p>
           </article>
@@ -643,13 +665,13 @@
           <article class="dish" data-tags="kinder vegetarisch vegan">
             <div class="dish-top">
               <div class="dish-name"><span class="num">K1.</span>Pommes</div>
-              <div class="dish-price">4,00€</div>
+              <div class="dish-price">{{ site.data.preise_speisekarte["K1"] | default: "Preis auf Anfrage" }}</div>
             </div>
           </article>
           <article class="dish" data-tags="kinder huhn">
             <div class="dish-top">
               <div class="dish-name"><span class="num">K2.</span>Pommes mit Nuggets</div>
-              <div class="dish-price">6,50€</div>
+              <div class="dish-price">{{ site.data.preise_speisekarte["K2"] | default: "Preis auf Anfrage" }}</div>
             </div>
           </article>
         </div>
@@ -671,30 +693,30 @@
         <div>
           <h3 style="font-size:1.1rem; margin-bottom:14px;">Beilagen</h3>
           <div class="menu-simple-list">
-            <div class="row"><span>Gekochter Reis</span><span>2,00€</span></div>
-            <div class="row"><span>Gebratener Reis</span><span>4,00€</span></div>
-            <div class="row"><span>Gebratene Nudeln</span><span>4,00€</span></div>
+            <div class="row"><span>Gekochter Reis</span><span>{{ site.data.preise_speisekarte["beilage-reis-gekocht"] | default: "Preis auf Anfrage" }}</span></div>
+            <div class="row"><span>Gebratener Reis</span><span>{{ site.data.preise_speisekarte["beilage-reis-gebraten"] | default: "Preis auf Anfrage" }}</span></div>
+            <div class="row"><span>Gebratene Nudeln</span><span>{{ site.data.preise_speisekarte["beilage-nudeln-gebraten"] | default: "Preis auf Anfrage" }}</span></div>
           </div>
           <h3 style="font-size:1.1rem; margin:32px 0 14px;">Extra Saucen</h3>
           <div class="menu-simple-list">
-            <div class="row"><span>Süß-Sauer</span><span>2,00€</span></div>
-            <div class="row"><span>Erdnuss Sauce</span><span>3,00€</span></div>
-            <div class="row"><span>Knoblauch mit Sojasauce</span><span>2,00€</span></div>
+            <div class="row"><span>Süß-Sauer</span><span>{{ site.data.preise_speisekarte["sauce-suess-sauer"] | default: "Preis auf Anfrage" }}</span></div>
+            <div class="row"><span>Erdnuss Sauce</span><span>{{ site.data.preise_speisekarte["sauce-erdnuss"] | default: "Preis auf Anfrage" }}</span></div>
+            <div class="row"><span>Knoblauch mit Sojasauce</span><span>{{ site.data.preise_speisekarte["sauce-knoblauch-soja"] | default: "Preis auf Anfrage" }}</span></div>
           </div>
         </div>
         <div>
           <h3 style="font-size:1.1rem; margin-bottom:14px;">Desserts</h3>
           <div class="menu-simple-list">
-            <div class="row"><span>Gebackene Bananen mit Honig</span><span>4,00€</span></div>
-            <div class="row"><span>Gebratene Äpfel mit Honig</span><span>4,00€</span></div>
-            <div class="row"><span>Mochi Cake (versch. Sorten, 3 Stk.)</span><span>5,00€</span></div>
+            <div class="row"><span>Gebackene Bananen mit Honig</span><span>{{ site.data.preise_speisekarte["dessert-bananen-honig"] | default: "Preis auf Anfrage" }}</span></div>
+            <div class="row"><span>Gebratene Äpfel mit Honig</span><span>{{ site.data.preise_speisekarte["dessert-aepfel-honig"] | default: "Preis auf Anfrage" }}</span></div>
+            <div class="row"><span>Mochi Cake (versch. Sorten, 3 Stk.)</span><span>{{ site.data.preise_speisekarte["dessert-mochi"] | default: "Preis auf Anfrage" }}</span></div>
           </div>
           <h3 style="font-size:1.1rem; margin:32px 0 14px;">Getränke zum Mitnehmen</h3>
           <div class="menu-simple-list">
-            <div class="row"><span>Asia-Getränke (Lychee, Mango, Guava) 0,25 l</span><span>3,00€</span></div>
-            <div class="row"><span>Cola, Wasser, Sprite, Fanta 0,3 l</span><span>2,50€</span></div>
-            <div class="row"><span>Cola, Wasser, Sprite, Fanta 1 l</span><span>6,00€</span></div>
-            <div class="row"><span>Bier (Krombacher oder Beck's) 0,5 l</span><span>2,50€</span></div>
+            <div class="row"><span>Asia-Getränke (Lychee, Mango, Guava) 0,25 l</span><span>{{ site.data.preise_speisekarte["getraenk-asia-025l"] | default: "Preis auf Anfrage" }}</span></div>
+            <div class="row"><span>Cola, Wasser, Sprite, Fanta 0,3 l</span><span>{{ site.data.preise_speisekarte["getraenk-softdrink-03l"] | default: "Preis auf Anfrage" }}</span></div>
+            <div class="row"><span>Cola, Wasser, Sprite, Fanta 1 l</span><span>{{ site.data.preise_speisekarte["getraenk-softdrink-1l"] | default: "Preis auf Anfrage" }}</span></div>
+            <div class="row"><span>Bier (Krombacher oder Beck's) 0,5 l</span><span>{{ site.data.preise_speisekarte["getraenk-bier-05l"] | default: "Preis auf Anfrage" }}</span></div>
           </div>
         </div>
       </div>

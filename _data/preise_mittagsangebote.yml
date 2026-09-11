@@ -1,0 +1,12 @@
+# Preise für mittagsangebote.html.
+# WICHTIG: Nur den Betrag NACH dem Doppelpunkt ändern (z. B. 13,00€).
+# Die Bezeichnung davor in Anführungszeichen (z. B. "M1") bitte NICHT ändern —
+# sie verbindet die Zeile mit dem richtigen Gericht auf der Seite.
+"M1": 13,00€
+"M2": 14,50€
+"M3": 14,00€
+"M4": 13,00€
+"M5": 13,00€
+"M6": 13,00€
+"M7": 14,00€
+"M8": 14,00€
