@@ -1,6 +1,14 @@
 ---
 layout: null
 ---
+{% comment %} Google-Bewertung: Zeile 1 = Punktzahl (Punkt als Dezimaltrennzeichen), Zeile 2 = Anzahl Bewertungen {% endcomment %}
+{% capture newline %}
+{% endcapture %}
+{% capture google_bewertung_raw %}{% include_relative content/google-bewertung.txt %}{% endcapture %}
+{% assign google_bewertung_zeilen = google_bewertung_raw | strip | split: newline %}
+{% assign google_score = google_bewertung_zeilen[0] | strip %}
+{% assign google_score_de = google_score | replace: ".", "," %}
+{% assign google_anzahl = google_bewertung_zeilen[1] | strip %}
 <!doctype html>
 <html lang="de">
 <head>
@@ -74,8 +82,8 @@ layout: null
   "menu": "https://saigon-bistro.de/speisekarte.html",
   "aggregateRating": {
     "@type": "AggregateRating",
-    "ratingValue": "4.8",
-    "reviewCount": "44",
+    "ratingValue": "{{ google_score }}",
+    "reviewCount": "{{ google_anzahl }}",
     "bestRating": "5"
   },
   "sameAs": ["https://maps.app.goo.gl/7SXd3Avbm6fRCFQc9"]
@@ -142,9 +150,9 @@ layout: null
 <main>
 
   <!-- ============================= AKTUELLES ============================= -->
-  <!-- Inhalt kommt aus aktuelles.txt und wird von GitHub Pages (Jekyll) beim Build eingesetzt. -->
+  <!-- Inhalt kommt aus content/aktuelles.txt und wird von GitHub Pages (Jekyll) beim Build eingesetzt. -->
   <!-- Ist die Datei leer, wird die Box gar nicht erst ins HTML gerendert. -->
-  {% capture aktuelles_raw %}{% include_relative aktuelles.txt %}{% endcapture %}
+  {% capture aktuelles_raw %}{% include_relative content/aktuelles.txt %}{% endcapture %}
   {% assign aktuelles_message = aktuelles_raw | strip %}
   {% if aktuelles_message != "" %}
   <div class="aktuelles-bar">
@@ -165,7 +173,7 @@ layout: null
     <div class="container">
       <div class="hero-badges reveal-stagger">
         <a class="hero-badge hero-badge-link" href="https://maps.app.goo.gl/7SXd3Avbm6fRCFQc9" target="_blank" rel="noopener">
-          <span class="num">4.8</span><span class="lbl">★★★★★ &middot; 44 Bewertungen auf Google</span>
+          <span class="num">{{ google_score }}</span><span class="lbl">★★★★★ &middot; {{ google_anzahl }} Bewertungen auf Google</span>
         </a>
         <div class="hero-badge"><span class="num">V</span><span class="lbl">Vegetarische &amp; vegane Optionen erhältlich</span></div>
         <div class="hero-badge">
@@ -219,8 +227,8 @@ layout: null
           <span>Asiatisch bestellen war nie einfacher: Alle Speisen gibt es zum Mitnehmen oder per
             Lieferservice<sup>*</sup> zu Ihnen nach Hause.</span>
           <ul class="order-note-list">
-            <li><strong>Abholung:</strong> 12:15–20:45 Uhr</li>
-            <li><strong>Lieferung:</strong> ab 14:00 Uhr (wochentags), ab 12:15 Uhr (Wochenende)</li>
+            <li><strong>Abholung:</strong> {% include_relative content/abholung.txt %}</li>
+            <li><strong>Lieferung:</strong> {% include_relative content/lieferung.txt %}</li>
           </ul>
         </div>
       </div>
@@ -231,8 +239,7 @@ layout: null
         </div>
         <div class="order-banner-text">
           <strong>Öffnungszeiten</strong>
-          <span>Dienstag – Freitag: 11:00 – 21:00 Uhr &middot; Samstag &amp; Sonntag: 12:00 – 21:00 Uhr
-            &middot; Montag: Ruhetag</span>
+          <span>{% include_relative content/oeffnungszeiten.txt %}</span>
         </div>
       </div>
 
@@ -270,7 +277,7 @@ layout: null
           lassen sie hier bewusst für sich sprechen.</p>
         <a class="google-rating-link" href="https://maps.app.goo.gl/7SXd3Avbm6fRCFQc9" target="_blank" rel="noopener">
           <span class="stars">★★★★★</span>
-          <span><strong>4,8/5</strong> auf Google &middot; alle 44 Bewertungen ansehen</span>
+          <span><strong>{{ google_score_de }}/5</strong> auf Google &middot; alle {{ google_anzahl }} Bewertungen ansehen</span>
         </a>
       </div>
 

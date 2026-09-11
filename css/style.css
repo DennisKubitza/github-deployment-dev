@@ -379,11 +379,11 @@ button{ font-family:inherit; cursor:pointer; }
 
 .aktuelles-bar{ background:var(--lacquer); border-bottom:1px solid var(--line-strong); }
 .aktuelles-inner{
-  display:flex; align-items:center; gap:14px; padding:14px 24px; color:var(--cream);
+  display:flex; align-items:center; justify-content:center; gap:14px; padding:14px 24px; color:var(--cream);
 }
 .aktuelles-icon{ display:inline-flex; flex:none; color:var(--cream); }
 .aktuelles-icon svg{ width:22px; height:22px; }
-.aktuelles-text{ margin:0; font-size:.92rem; line-height:1.5; }
+.aktuelles-text{ margin:0; font-size:.92rem; line-height:1.5; text-align:center; }
 .aktuelles-text strong{ font-family:var(--sans); font-weight:700; margin-right:.4em; }
 @media (max-width: 640px){
   .aktuelles-inner{ flex-direction:column; text-align:center; gap:8px; padding:16px 24px; }

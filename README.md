@@ -91,41 +91,72 @@ per direktem Link gezeigt werden, bevor sie öffentlich auffindbar wird. Dafür 
 in allen drei HTML-Dateien entfernen (oder auf `index, follow` ändern) und ggf. die `Disallow`-Zeile aus
 der (eigenen oder eingebundenen) `robots.txt` wieder streichen.
 
-## „Aktuelles"-Hinweisbox auf der Startseite
+## Bearbeitbare Inhalte (`content/`-Ordner)
 
-Auf der Startseite (`index.html`) erscheint ganz oben (vor dem Hero-Bereich) eine Hinweisbox für
-kurzfristige Mitteilungen (z. B. Betriebsferien, Feiertagsschließung). Der Text steht **nicht** im
-HTML, sondern in der einfachen Textdatei `aktuelles.txt` im Hauptordner:
+Ein paar Textbausteine auf der Startseite stehen **nicht** im HTML, sondern als einfache Textdateien
+im Ordner `content/` — damit sie sich ohne HTML/CSS-Kenntnisse direkt auf GitHub bearbeiten lassen
+(Datei öffnen → Stift-Symbol „Edit this file" → Text ändern → committen). Kein JavaScript beteiligt:
+GitHub Pages rendert diese Dateien beim Jekyll-Build serverseitig in `index.html` ein (siehe
+„Technisch" unten).
 
-- **Ist `aktuelles.txt` leer** (oder nicht vorhanden), wird die Box beim Seiten-Build gar nicht erst
-  ins HTML geschrieben.
-- **Steht Text in `aktuelles.txt`**, erscheint er automatisch in der Box — kein HTML/CSS-Wissen
-  nötig.
+| Datei | Wofür | Beispielinhalt |
+|---|---|---|
+| `content/aktuelles.txt` | Hinweisbox ganz oben auf der Startseite für kurzfristige Mitteilungen (Betriebsferien, Feiertagsschließung). **Leer = Box wird nicht angezeigt.** | `Wir sind bis zum 25. Oktober in Betriebsferien. Danach sind wir wieder für Sie da.` |
+| `content/abholung.txt` | Abholzeiten im Lieferservice-Banner | `12:15–20:45 Uhr` |
+| `content/lieferung.txt` | Lieferzeiten im Lieferservice-Banner | `ab 14:00 Uhr (wochentags), ab 12:15 Uhr (Wochenende)` |
+| `content/oeffnungszeiten.txt` | Öffnungszeiten-Banner | `Dienstag – Freitag: 11:00 – 21:00 Uhr · Samstag & Sonntag: 12:00 – 21:00 Uhr · Montag: Ruhetag` |
+| `content/google-bewertung.txt` | Google-Bewertung: **Zeile 1** = Punktzahl (mit Punkt, z. B. `4.8`), **Zeile 2** = Anzahl Bewertungen (z. B. `44`). Wird an allen drei Stellen der Startseite verwendet (Trust-Bar oben, Rezensionen-Bereich, `schema.org`-Bewertungsdaten für Suchmaschinen) — eine Änderung hier aktualisiert automatisch alle drei. | `4.8`⏎`44` |
 
-Um eine Mitteilung zu setzen oder zu ändern: Datei `aktuelles.txt` direkt auf GitHub öffnen (Stift-Symbol
-„Edit this file"), Text eintragen (z. B. `Wir sind bis zum 25. Oktober in Betriebsferien. Danach sind
-wir wieder für Sie da.`) und committen. Um die Mitteilung wieder auszublenden, einfach den gesamten
-Inhalt der Datei löschen und mit leerer Datei committen.
+Bei `abholung.txt` / `lieferung.txt` / `oeffnungszeiten.txt` nur den reinen Text eintragen, **ohne**
+die fette Überschrift davor (z. B. nur `12:15–20:45 Uhr`, nicht `Abholung: 12:15–20:45 Uhr`) — die
+Überschrift steht fest im HTML.
 
-Technisch: Es kommt **kein JavaScript** zum Einsatz. GitHub Pages baut die Seite standardmäßig mit
-Jekyll (kein `.nojekyll` im Repo, keine gesonderte Konfiguration nötig). `index.html` trägt dafür
-einen minimalen Jekyll-„Front Matter"-Block (`--- layout: null ---`) am Dateianfang, damit GitHub
-Pages die Datei durch den Liquid-Templating-Prozessor schickt. Ein Liquid-Block liest `aktuelles.txt`
-über `include_relative` ein, entfernt Leerzeichen/Zeilenumbrüche und rendert die Box nur, wenn danach
-noch Text übrig ist:
+Bei `google-bewertung.txt` bitte die Punktzahl immer mit **Punkt** (`4.9`, nicht `4,9`) eintragen —
+das deutsche Komma-Format für die Anzeige wird automatisch daraus erzeugt, während `schema.org`
+den Punkt als gültiges Zahlenformat benötigt.
+
+**Hinweis:** Die `schema.org`-Öffnungszeiten (`openingHoursSpecification`, strukturierte Daten im
+`<head>` für Google) sind separat als einzelne Wochentag/Uhrzeit-Felder hinterlegt und werden
+**nicht** automatisch aus `content/oeffnungszeiten.txt` befüllt — bei einer echten Änderung der
+Öffnungszeiten also beide Stellen pflegen (Text in `content/oeffnungszeiten.txt` **und** die
+`openingHoursSpecification` weiter oben in `index.html`).
+
+### Technisch
+
+Es kommt **kein JavaScript** zum Einsatz. GitHub Pages baut die Seite standardmäßig mit Jekyll
+(kein `.nojekyll` im Repo, keine gesonderte Konfiguration nötig). `index.html` trägt dafür einen
+minimalen Jekyll-„Front Matter"-Block (`--- layout: null ---`) am Dateianfang, damit GitHub Pages
+die Datei durch den Liquid-Templating-Prozessor schickt. Liquid-Blöcke lesen die Dateien aus
+`content/` über `include_relative` ein und setzen den Text direkt ins HTML — z. B. für die
+Hinweisbox, deren Rendering zusätzlich davon abhängt, ob nach dem Entfernen von
+Leerzeichen/Zeilenumbrüchen noch Text übrig ist:
 
 ```liquid
-{% capture aktuelles_raw %}{% include_relative aktuelles.txt %}{% endcapture %}
+{% capture aktuelles_raw %}{% include_relative content/aktuelles.txt %}{% endcapture %}
 {% assign aktuelles_message = aktuelles_raw | strip %}
 {% if aktuelles_message != "" %}
   ... Box mit {{ aktuelles_message | escape }} ...
 {% endif %}
 ```
 
-Das Rendering passiert also vollständig serverseitig beim GitHub-Pages-Build, bevor die Seite an
-den Browser ausgeliefert wird — nicht mehr im Browser per `fetch`. Alle anderen Seiten
-(`speisekarte.html`, `anfahrt.html`, …) bleiben unverändert reine, von Jekyll unangetastete
-HTML-Dateien, da nur `index.html` einen Front-Matter-Block besitzt.
+Die Google-Bewertung liegt als zwei Zeilen in einer Datei; da Liquids `split`-Filter nicht direkt auf
+echte Zeilenumbrüche matcht, wird dafür der gängige Jekyll-Kniff verwendet, einen Zeilenumbruch per
+`capture` in eine Variable zu holen:
+
+```liquid
+{% capture newline %}
+{% endcapture %}
+{% capture google_bewertung_raw %}{% include_relative content/google-bewertung.txt %}{% endcapture %}
+{% assign google_bewertung_zeilen = google_bewertung_raw | strip | split: newline %}
+{% assign google_score = google_bewertung_zeilen[0] | strip %}
+{% assign google_score_de = google_score | replace: ".", "," %}
+{% assign google_anzahl = google_bewertung_zeilen[1] | strip %}
+```
+
+Das Rendering passiert vollständig serverseitig beim GitHub-Pages-Build, bevor die Seite an den
+Browser ausgeliefert wird. Alle anderen Seiten (`speisekarte.html`, `anfahrt.html`, …) bleiben
+unverändert reine, von Jekyll unangetastete HTML-Dateien, da nur `index.html` einen
+Front-Matter-Block besitzt.
 
 ## Inhalte, die noch ergänzt werden sollten
 
@@ -142,6 +173,12 @@ website/
 ├── speisekarte.html
 ├── anfahrt.html
 ├── robots.txt        (nur wirksam, wenn am Domain-Root gehostet — siehe oben)
+├── content/           (bearbeitbare Textbausteine, siehe „Bearbeitbare Inhalte" oben)
+│   ├── aktuelles.txt
+│   ├── abholung.txt
+│   ├── lieferung.txt
+│   ├── oeffnungszeiten.txt
+│   └── google-bewertung.txt
 ├── css/style.css
 ├── js/main.js
 └── images/
